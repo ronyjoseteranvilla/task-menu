@@ -18,7 +18,6 @@ class MenuController extends Controller
     public function store(Request $request): MenuResource
     {
         $menu = Menu::create($request->all());
-        MenuResource::withoutWrapping();
         return new MenuResource($menu);
     }
 
@@ -30,7 +29,6 @@ class MenuController extends Controller
     public function show($menu)
     {
         $menu = Menu::find($menu);
-        MenuResource::withoutWrapping();
         return new MenuResource($menu);
     }
 
@@ -45,7 +43,6 @@ class MenuController extends Controller
     {
         $menuElement = Menu::find($menu);
         $menuElement->update($request->all());
-        MenuResource::withoutWrapping();
         return new MenuResource($menuElement);
     }
 
