@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ItemResource;
+use App\Item;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ItemController extends Controller
 {
@@ -12,9 +15,10 @@ class ItemController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): ItemResource
     {
-        //
+        $item = Item::create($request->all());
+        return new ItemResource($item);
     }
 
     /**
@@ -23,9 +27,10 @@ class ItemController extends Controller
      * @param  mixed $item
      * @return \Illuminate\Http\Response
      */
-    public function show($item)
+    public function show($item): ItemResource
     {
-        //
+        $item = Item::find($item);
+        return new ItemResource($item);
     }
 
     /**
@@ -35,9 +40,11 @@ class ItemController extends Controller
      * @param  mixed                    $item
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $item)
+    public function update(Request $request, $item): ItemResource
     {
-        //
+        $itemElement = Item::find($item);
+        $itemElement->update($request->all());
+        return new ItemResource($itemElement);
     }
 
     /**
@@ -46,8 +53,10 @@ class ItemController extends Controller
      * @param  mixed $item
      * @return \Illuminate\Http\Response
      */
-    public function destroy($item)
+    public function destroy($item): Response
     {
-        //
+        $itemElement = Item::find($item);
+        $itemElement->delete();
+        return new Response('Deleted');
     }
 }
