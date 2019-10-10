@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Controller\MenuControllerTest;
 
-use App\Controller\MenuController;
+use App\Http\Controllers\MenuController;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -60,7 +60,6 @@ class MenuControllerTest extends TestCase{
                 'max_children'
             ]
         );
-        //$this->assertTrue(true);
         
     } 
     
@@ -87,5 +86,23 @@ class MenuControllerTest extends TestCase{
             ]
         );
 
+    }
+
+    /**
+     * @test
+     */
+    public function check_unit_test_show_method(){
+        $data = [
+            "field"=> "Menu",
+            "max_depth"=> 5,
+            "max_children"=> 5
+        ];
+        $response = $this->json('POST', '/api/menus/', $data);
+        $insertedMenu = $response->getData();
+        $menu = new MenuController();
+        $value = $menu->show($insertedMenu->id);
+        $showMenu = $value->resolve();        
+        $this->assertEquals($showMenu['field'], $data['field']);
+        $this->assertArrayHasKey('id', $showMenu);
     }
 }
