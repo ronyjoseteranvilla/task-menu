@@ -9,7 +9,7 @@ class ItemChildrenController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -20,7 +20,7 @@ class ItemChildrenController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  mixed  $item
+     * @param  mixed $item
      * @return \Illuminate\Http\Response
      */
     public function show($item)
@@ -31,7 +31,7 @@ class ItemChildrenController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  mixed  $item
+     * @param  mixed $item
      * @return \Illuminate\Http\Response
      */
     public function destroy($item)

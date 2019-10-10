@@ -11,7 +11,7 @@ class MenuLayerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  mixed  $menu comment menu ID
+     * @param mixed $menu  comment menu ID
      * @param mixed $layer comment layer number
      * 
      * @return \Illuminate\Http\Response
@@ -26,7 +26,7 @@ class MenuLayerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  mixed  $menu
+     * @param mixed $menu
      * 
      * @return \Illuminate\Http\Response
      */

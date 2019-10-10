@@ -7,7 +7,7 @@ class MenuDepthController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  mixed  $menu
+     * @param  mixed $menu
      * @return \Illuminate\Http\Response
      */
     public function show($menu)

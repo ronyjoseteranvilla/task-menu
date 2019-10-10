@@ -13,7 +13,7 @@ class MenuItemController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, $menu)
@@ -30,10 +30,10 @@ class MenuItemController extends Controller
     /**
      * Interate the items array and inserts it and it's children
      *
-     * @param [type] $data comment request->all data
-     * @param [type] $level comment level where the item is on the tree
-     * @param [type] $parent_id comment item parent id
-     * @param [type] $menu_id comment menu if where the item belongs
+     * @param  [type] $data      comment request->all data
+     * @param  [type] $level     comment level where the item is on the tree
+     * @param  [type] $parent_id comment item parent id
+     * @param  [type] $menu_id   comment menu if where the item belongs
      * @return boolean
      */
     public function interateMenuItems($data, $level, $parent_id, $menu_id, $max_depth, $max_children): bool
@@ -41,9 +41,9 @@ class MenuItemController extends Controller
         $aux_parentID = '';
         foreach ($data as $index1 => $node) {
             foreach ($node as $index => $value) {
-                if($index === "children"){
-                    $val = $this->interateMenuItems($value, $level + 1, $aux_parentID, $menu_id, $max_depth, $max_children );
-                }else if($index=='field'){
+                if($index === "children") {
+                    $val = $this->interateMenuItems($value, $level + 1, $aux_parentID, $menu_id, $max_depth, $max_children);
+                }else if($index=='field') {
                     $item = new Item();
                     $item->field = $node['field'];
                     $item->menu_id = $menu_id;
@@ -61,7 +61,7 @@ class MenuItemController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  mixed  $menu
+     * @param  mixed $menu
      * @return \Illuminate\Http\Response
      */
     public function show($menu)
@@ -72,7 +72,7 @@ class MenuItemController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  mixed  $menu comment Menu ID 
+     * @param  mixed $menu comment Menu ID 
      * @return \Illuminate\Http\Response
      */
     public function destroy($menu)
