@@ -20,7 +20,7 @@ class MenuItemController extends Controller
     {
         $menu = Menu::find($menu);        
         try {
-            $response = $this->interateMenuItems($request->all(), 0, '', $menu->id); 
+            $response = $this->interateMenuItems($request->all(), 1, '', $menu->id, $menu->max_depth, $menu->max_children); 
         } catch (\Throwable $th) {
             return $th;
         }
@@ -36,13 +36,13 @@ class MenuItemController extends Controller
      * @param [type] $menu_id comment menu if where the item belongs
      * @return boolean
      */
-    public function interateMenuItems($data, $level, $parent_id, $menu_id): bool
+    public function interateMenuItems($data, $level, $parent_id, $menu_id, $max_depth, $max_children): bool
     {
         $aux_parentID = '';
         foreach ($data as $index1 => $node) {
             foreach ($node as $index => $value) {
                 if($index === "children"){
-                    $val = $this->interateMenuItems($value, $level + 1, $aux_parentID, $menu_id);
+                    $val = $this->interateMenuItems($value, $level + 1, $aux_parentID, $menu_id, $max_depth, $max_children );
                 }else if($index=='field'){
                     $item = new Item();
                     $item->field = $node['field'];
@@ -72,11 +72,12 @@ class MenuItemController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  mixed  $menu
+     * @param  mixed  $menu comment Menu ID 
      * @return \Illuminate\Http\Response
      */
     public function destroy($menu)
     {
-        //
+        $deletedRows = Item::where('menu_id', $menu)->delete();
+        return new Response('Deleted');
     }
 }

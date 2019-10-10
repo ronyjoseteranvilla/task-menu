@@ -17,12 +17,13 @@ class CreateItemsTable extends Migration
             $table->bigIncrements('id');
             $table->string('field');
             $table->bigInteger('menu_id')->nullable()->unsigned();
-            $table->bigInteger('parent_id')->nullable();
+            $table->bigInteger('parent_id')->nullable()->unsigned();
             $table->bigInteger('level');
 
             $table->timestamps();
 
             $table->foreign('menu_id')->references('id')->on('menus');
+            $table->foreign('parent_id')->references('id')->on('items');
         });
     }
 
