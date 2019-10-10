@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class MenuController extends Controller
 {
@@ -14,7 +15,7 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return new Response('hello');
     }
 
     /**
