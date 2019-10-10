@@ -18,7 +18,7 @@ class CreateItemsTable extends Migration
             $table->string('field');
             $table->bigInteger('menu_id')->nullable()->unsigned();
             $table->bigInteger('parent_id')->nullable()->unsigned();
-            $table->bigInteger('level');
+            $table->bigInteger('level')->nullable();
 
             $table->timestamps();
 
