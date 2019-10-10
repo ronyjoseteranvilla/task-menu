@@ -516,3 +516,14 @@ Get depth of menu.
 * Use cache
 * Use data structures
 * Use docker
+
+
+##
+* 10 vs 1.000.000 menu items - what would you do differently?
+Like my sofware developer teacher said, if it works with 10 it should work with 1.000.000, but i would include a pagination on Resources call
+
+* Use PhpCs and PhpCsFixe
+* for PhpStan i used https://github.com/nunomaduro/larastan.git 
+
+* to run composer use docker-compose up -d --build database && docker-compose up -d --build app && docker-compose up -d --build web 
+* Port is: 8990
