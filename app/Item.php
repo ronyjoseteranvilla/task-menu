@@ -12,4 +12,9 @@ class Item extends Model
         'parent_id',
         'level'
     ];
+
+    public function children()
+    {
+        return $this->hasMany('App\Item', 'parent_id', 'id');
+    }
 }

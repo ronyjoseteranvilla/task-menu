@@ -23,12 +23,12 @@ class MenuController extends Controller
     public function store(Request $request): MenuResource
     {
         $request->validate(
-                 [
+            [
                  'field'    => 'required',
                  'max_depth'     => 'required',
                  'max_children'         => 'required'
                  ]
-             );
+        );
         $menu = Menu::create($request->all());
         return new MenuResource($menu);
     }

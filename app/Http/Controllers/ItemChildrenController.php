@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ItemCollection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -29,10 +30,10 @@ class ItemChildrenController extends Controller
     /**
      * Undocumented function
      *
-     * @param [type] $data
-     * @param [type] $level
-     * @param [type] $parent_id
-     * @param [type] $menu_id
+     * @param  [type] $data
+     * @param  [type] $level
+     * @param  [type] $parent_id
+     * @param  [type] $menu_id
      * @return boolean
      */
     public function interateItems($data, $level, $parent_id): bool
@@ -60,11 +61,13 @@ class ItemChildrenController extends Controller
      * Display the specified resource.
      *
      * @param  mixed $item
-     * @return \Illuminate\Http\Response
+     * @return use Illuminate\Http\Resources\Json\JsonResource;
      */
     public function show($item)
     {
-        //
+        $items = Item::with('children')->where('id', $item)->get();
+        //return new ItemCollection($items);
+        return response()->json($items);
     }
 
     /**
@@ -75,6 +78,26 @@ class ItemChildrenController extends Controller
      */
     public function destroy($item)
     {
-        //
+        $parent = Item::findOrFail($item);
+        $idArray = $this->getChildren($parent);
+        array_push($idArray, $item);
+        Item::destroy($idArray);
+        return new Response('deleted');
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param  [type] $items
+     * @return void
+     */
+    private function getChildren($items)
+    {
+        $ids = [];
+        foreach($items->children as $item){
+            $ids[] = $item->id;
+            $ids = array_merge($ids, $this->getChildren($item));
+        }
+        return $ids;
     }
 }
