@@ -1,4 +1,8 @@
 <?php
+/**
+ * @file
+ * Description this is the Menu Controller to create a new controller
+ */
 
 namespace App\Http\Controllers;
 
@@ -12,7 +16,8 @@ class MenuController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request comment request data
+     *
      * @return App\Http\Resources\MenuResource
      */
     public function store(Request $request): MenuResource
@@ -23,10 +28,12 @@ class MenuController extends Controller
 
     /**
      * Display the specified resource.
-     * @param  mixed  $menu
-     * @return \Illuminate\Http\Response
+     *
+     * @param mixed $menu comment Menu ID
+     *
+     * @return App\Http\Resources\MenuResource
      */
-    public function show($menu)
+    public function show($menu): MenuResource
     {
         $menu = Menu::find($menu);
         return new MenuResource($menu);
@@ -35,11 +42,12 @@ class MenuController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $menu
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request comment request data
+     * @param mixed                    $menu    comment Menu ID
+     *
+     * @return App\Http\Resources\MenuResource
      */
-    public function update(Request $request, $menu)
+    public function update(Request $request, $menu): MenuResource
     {
         $menuElement = Menu::find($menu);
         $menuElement->update($request->all());
@@ -49,10 +57,11 @@ class MenuController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  mixed  $menu
+     * @param mixed $menu comment Menu ID
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($menu)
+    public function destroy($menu): Response
     {
         $menuElement = Menu::find($menu);
         $menuElement->delete();
