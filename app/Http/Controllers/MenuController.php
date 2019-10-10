@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\MenuResource;
 use App\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -12,23 +13,25 @@ class MenuController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return App\Http\Resources\MenuResource
      */
-    public function store(Request $request)
+    public function store(Request $request): MenuResource
     {
         $menu = Menu::create($request->all());
-        return $request->all();
+        MenuResource::withoutWrapping();
+        return new MenuResource($menu);
     }
 
     /**
      * Display the specified resource.
-     *
      * @param  mixed  $menu
      * @return \Illuminate\Http\Response
      */
     public function show($menu)
     {
-        //
+        $menu = Menu::find($menu);
+        MenuResource::withoutWrapping();
+        return new MenuResource($menu);
     }
 
     /**
@@ -40,7 +43,10 @@ class MenuController extends Controller
      */
     public function update(Request $request, $menu)
     {
-        //
+        $menuElement = Menu::find($menu);
+        $menuElement->update($request->all());
+        MenuResource::withoutWrapping();
+        return new MenuResource($menuElement);
     }
 
     /**
@@ -51,6 +57,8 @@ class MenuController extends Controller
      */
     public function destroy($menu)
     {
-        //
+        $menuElement = Menu::find($menu);
+        $menuElement->delete();
+        return new Response('Deleted');
     }
 }
