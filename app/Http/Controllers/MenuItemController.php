@@ -15,7 +15,7 @@ class MenuItemController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function store(Request $request, $menu)
     {
@@ -25,7 +25,8 @@ class MenuItemController extends Controller
         } catch (\Throwable $th) {
             return $th;
         }
-        return response()->json($request->all());
+        $items = Item::with('children')->where('menu_id', $menu->id)->where('parent_id', null)->orderBy('id','ASC')->get();
+        return response()->json($items);
     }
 
     /**
@@ -68,17 +69,20 @@ class MenuItemController extends Controller
      * Display the specified resource.
      *
      * @param  mixed $menu
-     * @return \Illuminate\Http\Response
+     * 
+     * @return \Illuminate\Http\Resources\Json\JsonResource;
      */
     public function show($menu)
     {
-        //
+        $items = Item::with('children')->where('menu_id', $menu)->where('parent_id', null)->orderBy('id','ASC')->get();
+        return response()->json($items);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  mixed $menu comment Menu ID 
+     * 
      * @return \Illuminate\Http\Response
      */
     public function destroy($menu)

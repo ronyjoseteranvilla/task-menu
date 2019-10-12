@@ -14,11 +14,12 @@ class MenuResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'id' => $this->id,
-            'field' => $this->field,
-            'max_depth' => $this->max_depth,
-            'max_children' => $this->max_children
-        ];
+        //return parent::toArray($request);
+         return [
+             'id' => $this->id,
+             'field' => $this->field,
+             'max_depth' => $this->max_depth,
+             'max_children' => $this->max_children
+         ];
     }
 }

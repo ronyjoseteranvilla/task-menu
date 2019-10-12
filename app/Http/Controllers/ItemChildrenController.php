@@ -14,17 +14,18 @@ class ItemChildrenController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return Illuminate\Http\Resources\Json\JsonResource
      */
     public function store(Request $request, $item)
     {
-        $item = Item::find($item);      
+        $item = Item::find($item);
         try {
-            $response = $this->interateItems($request->all(), 1, $item->id); 
+            $response = $this->interateItems($request->all(), 1, $item->id);
         } catch (\Throwable $th) {
             return $th;
         }
-        return response()->json($request->all()); 
+        $items = Item::Id($item)->with('children')->get();
+        return response()->json($items);
     }
 
     /**
@@ -41,15 +42,15 @@ class ItemChildrenController extends Controller
         $aux_parentID = '';
         foreach ($data as $index1 => $node) {
             foreach ($node as $index => $value) {
-                if($index === "children") {
+                if ($index === "children") {
                     $val = $this->interateItems($value, $level + 1, $aux_parentID);
-                }else if($index=='field') {
+                } else if ($index == 'field') {
                     $item = new Item();
                     $item->field = $node['field'];
                     $item->level = $level;
-                    $item->parent_id = ($parent_id != '')?$parent_id: null;
-                    $item->save(); 
-                    $aux_parentID = $item->id;                   
+                    $item->parent_id = ($parent_id != '') ? $parent_id : null;
+                    $item->save();
+                    $aux_parentID = $item->id;
                 }
             }
         }
@@ -65,8 +66,8 @@ class ItemChildrenController extends Controller
      */
     public function show($item)
     {
-        $items = Item::with('children')->where('id', $item)->get();
-        //return new ItemCollection($items);
+        //$items = Item::with('children')->where('id', $item)->get();
+        $items = Item::Id($item)->with('children')->get();
         return response()->json($items);
     }
 
@@ -86,7 +87,7 @@ class ItemChildrenController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Transform all the items id into array
      *
      * @param  [type] $items
      * @return void
@@ -94,7 +95,7 @@ class ItemChildrenController extends Controller
     private function getChildren($items)
     {
         $ids = [];
-        foreach($items->children as $item){
+        foreach ($items->children as $item) {
             $ids[] = $item->id;
             $ids = array_merge($ids, $this->getChildren($item));
         }

@@ -11,4 +11,6 @@ class Menu extends Model
         'max_depth',
         'max_children'
     ];
+
+    
 }
