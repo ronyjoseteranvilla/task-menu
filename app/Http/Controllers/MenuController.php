@@ -6,6 +6,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MenuRequest;
 use App\Http\Resources\MenuResource;
 use App\Menu;
 use Illuminate\Http\Request;
@@ -16,19 +17,19 @@ class MenuController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request comment request data
+     * @param App\Http\Requests\MenuResource $request comment request data
      *
      * @return App\Http\Resources\MenuResource
      */
-    public function store(Request $request): MenuResource
+    public function store(MenuRequest $request): MenuResource
     {
-        $request->validate(
-            [
-                 'field'    => 'required',
-                 'max_depth'     => 'required',
-                 'max_children'         => 'required'
-                 ]
-        );
+        // $request->validate(
+        //     [
+        //          'field'    => 'required',
+        //          'max_depth'     => 'required',
+        //          'max_children'         => 'required'
+        //          ]
+        // );
         $menu = Menu::create($request->all());
         return new MenuResource($menu);
     }
