@@ -43,6 +43,7 @@ class MenuItemController extends Controller
     public function interateMenuItems($data, $level, $parent_id, $menu_id, $max_depth, $max_children): bool
     {
         $aux_parentID = '';
+        $childrenCount = 0;
         foreach ($data as $index1 => $node) {
             foreach ($node as $index => $value) {
                 if ($index === "children") {
@@ -87,7 +88,7 @@ class MenuItemController extends Controller
      */
     public function destroy($menu)
     {
-        $deletedRows = Item::where('menu_id', $menu)->delete();
+        $deletedRows = Item::DestroyByMenu($menu);
         return new Response('Deleted');
     }
 }

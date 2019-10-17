@@ -24,7 +24,7 @@ class ItemChildrenController extends Controller
         } catch (\Throwable $th) {
             return $th;
         }
-        $items = Item::Id($item)->with('children')->get();
+        $items = Item::getItems($item);
         return response()->json($items);
     }
 
@@ -66,8 +66,7 @@ class ItemChildrenController extends Controller
      */
     public function show($item)
     {
-        //$items = Item::with('children')->where('id', $item)->get();
-        $items = Item::Id($item)->with('children')->get();
+        $items = Item::getItems($item);
         return response()->json($items);
     }
 

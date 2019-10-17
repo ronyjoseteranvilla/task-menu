@@ -27,4 +27,12 @@ class Item extends Model
      public function scopeMenuID($query, $menu_id){
          return $query->where('menu_id', $menu_id);
      }
+
+     public function scopegetItems($query, $itemID){
+        return $query->Id($itemID)->with('children')->get();
+     }
+
+     public function scopeDestroyByMenu($query, $menuID){
+         return $query->where('menu_id', $menuID)->delete();
+     }
 }
